@@ -64,7 +64,7 @@ int main (int argc,char ** argv)
 	unsigned int i;
 	enum v4l2_buf_type type;
 
-	file_fd = fopen("test-mmap.jpeg", "w");//图片文件名
+	file_fd = fopen("tt.jpg", "w");//图片文件名
 
 	fd = open (dev_name, O_RDWR /* required */ | O_NONBLOCK, 0);//打开设备
 
@@ -77,7 +77,7 @@ int main (int argc,char ** argv)
 	fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
 	fmt.fmt.pix.field       = V4L2_FIELD_INTERLACED;
 	ioctl (fd, VIDIOC_S_FMT, &fmt); //设置图像格式
-
+sleep(3);
 	file_length = fmt.fmt.pix.bytesperline * fmt.fmt.pix.height; //计算图片大小
 
 	struct v4l2_requestbuffers req;
@@ -171,4 +171,4 @@ unmap:
 	fclose (file_fd);
 	exit (EXIT_SUCCESS);
 	return 0;
-}///////////////////////////////////////
+}
