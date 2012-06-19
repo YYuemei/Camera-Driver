@@ -1,0 +1,12 @@
+
+public class mainUI {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        softwareUI main = new softwareUI();
+	}
+
+}
