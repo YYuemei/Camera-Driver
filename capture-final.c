@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+/*
+ *  V4L2 video capture example
+ *
+ *  This program can be used and distributed without restrictions.
+ */
+
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +30,7 @@
 #define CLEAR(x) memset (&(x), 0, sizeof (x))
 
 struct buffer {
+<<<<<<< HEAD
 	unsigned char *         start;
 	size_t                  length;
 };
@@ -38,11 +48,34 @@ void errno_exit(const char *s)
 {
 	printf ( "%s error %d\n",
 			s, errno);
+=======
+	unsigned char *                  start;
+	size_t                  length;
+};
+
+static char *           dev_name        = NULL;
+static int              fd              = -1;
+struct buffer *         buffers         = NULL;
+static unsigned int     n_buffers       = 0;
+
+FILE *file_fd;
+
+//#define _DEBUG 1
+
+static void errno_exit(const char *s)
+{
+	fprintf (stderr, "%s error %d, %s\n",
+			s, errno, strerror (errno));
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 
 	exit (EXIT_FAILURE);
 }
 
+<<<<<<< HEAD
 int xioctl (int fd,int request,void *arg)
+=======
+static int xioctl (int fd,int request,void *arg)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 	int r;
 
@@ -53,7 +86,11 @@ int xioctl (int fd,int request,void *arg)
 }
 
 
+<<<<<<< HEAD
 int read_frame(void)
+=======
+static int read_frame(void)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 	struct v4l2_buffer buf;
 	unsigned int i;
@@ -71,6 +108,7 @@ int read_frame(void)
 
 	assert (buf.index < n_buffers);           //测试一个条件并可能使程序终止
 
+<<<<<<< HEAD
 	//fwrite( buffers[buf.index].start, buffers[buf.index].length, 1,file_fd);
 ////////////////////////////////////////////////////////////////////////////////////
 	int light = 0;
@@ -95,6 +133,12 @@ int read_frame(void)
 	printf("%s\n",cmd);
 	system(cmd);
 ////////////////////////////////////////////////////////////////////////////////////////
+=======
+	fwrite( buffers[buf.index].start, buffers[buf.index].length, 1,file_fd);
+	int light = 0;
+	xioctl(fd,VIDIOC_G_STD,&light);
+	printf("%d\n",light);
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	int ff,m= 0;
 	for(ff= 0;ff<buffers[buf.index].length;ff++)
 	{
@@ -108,6 +152,7 @@ int read_frame(void)
 	//printf("%d\n",m);
 	}
 	printf("light:%d\n",m/(ff/2048));
+<<<<<<< HEAD
 	//printf("start:%p,lenth:%d\n",buffers[buf.index].start,buffers[buf.index].length);
 	if (-1 == xioctl (fd, VIDIOC_QBUF, &buf))       // 再次，将 缓冲区 入列
 		errno_exit ("VIDIOC_QBUF");
@@ -116,6 +161,19 @@ int read_frame(void)
 }
 
 void mainloop(void)
+=======
+	printf("start:%p,lenth:%d\n",buffers[buf.index].start,buffers[buf.index].length);
+	if (-1 == xioctl (fd, VIDIOC_QBUF, &buf))       // 再次，将 缓冲区 入列
+		errno_exit ("VIDIOC_QBUF");
+
+
+
+
+	return 1;
+}
+
+static void mainloop(void)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 	for (;;) 
 	{
@@ -141,7 +199,11 @@ void mainloop(void)
 
 		if (0 == r) 
 		{
+<<<<<<< HEAD
 			printf ( "select timeout\n");
+=======
+			fprintf (stderr, "select timeout\n");
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 			exit (EXIT_FAILURE);
 		}
 
@@ -150,12 +212,20 @@ void mainloop(void)
 	}
 }
 
+<<<<<<< HEAD
 void stop_capturing(void)
+=======
+static void stop_capturing(void)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 
 }
 
+<<<<<<< HEAD
 void start_capturing(void)
+=======
+static void start_capturing(void)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 	unsigned int i;
 	enum v4l2_buf_type type;
@@ -205,7 +275,11 @@ static void init_mmap(void)
 	{
 		if (EINVAL == errno) 
 		{
+<<<<<<< HEAD
 			printf ( "%s does not support "
+=======
+			fprintf (stderr, "%s does not support "
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 					"memory mapping\n", dev_name);
 			exit (EXIT_FAILURE);
 		} 
@@ -215,17 +289,29 @@ static void init_mmap(void)
 		}
 	}
 
+<<<<<<< HEAD
 #ifdef _DEBUG_
+=======
+//#ifdef _DEBUG_
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	printf("count				:%d\n\n",req.count);
 	printf("type(CAPTURE=1)			:%d\n",req.type);
 	printf("memory(MEMORY_MMAP=1)		:%d\n\n",req.memory);
 
+<<<<<<< HEAD
 #endif
+=======
+//#endif
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 
 
 	if (req.count < 1) 
 	{
+<<<<<<< HEAD
 		printf ( "Insufficient buffer memory on %s\n",
+=======
+		fprintf (stderr, "Insufficient buffer memory on %s\n",
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 				dev_name);
 		exit (EXIT_FAILURE);
 	}
@@ -234,7 +320,11 @@ static void init_mmap(void)
 
 	if (!buffers) 
 	{
+<<<<<<< HEAD
 		printf ( "Out of memory\n");
+=======
+		fprintf (stderr, "Out of memory\n");
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 		exit (EXIT_FAILURE);
 	}
 
@@ -253,7 +343,11 @@ static void init_mmap(void)
 
 
 
+<<<<<<< HEAD
 #ifdef _DEBUG
+=======
+//#ifdef _DEBUG
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 		printf("index                        :%d\n",buf.index);
 		printf("buf_type(CAPTURE=1)          :%d\n",buf.type);
 		printf("bytesused                    :%d\n",buf.bytesused);
@@ -265,7 +359,11 @@ static void init_mmap(void)
 		printf("m.offset                     :%d\n",buf.m.offset);
 		printf("length                       :%d\n\n",buf.length);
 		printf("input                        :%d\n\n",buf.input);
+<<<<<<< HEAD
 #endif
+=======
+//#endif
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 
 		buffers[n_buffers].length = buf.length;
 		buffers[n_buffers].start =
@@ -289,7 +387,11 @@ static void init_device(void)
 
 	if (-1 == xioctl (fd, VIDIOC_QUERYCAP, &cap)) {
 		if (EINVAL == errno) {
+<<<<<<< HEAD
 			printf ("%s is no V4L2 device\n",
+=======
+			fprintf (stderr, "%s is no V4L2 device\n",
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 					dev_name);
 			exit (EXIT_FAILURE);
 		} else {
@@ -299,17 +401,28 @@ static void init_device(void)
 
 	if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE))
 	{
+<<<<<<< HEAD
 		printf ( "%s is no video capture device\n",
 				dev_name);
 		exit (EXIT_FAILURE);
 	}
 #ifdef _DEBUG
+=======
+		fprintf (stderr, "%s is no video capture device\n",
+				dev_name);
+		exit (EXIT_FAILURE);
+	}
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	printf("drivers     :%s\n",cap.driver);
 	printf("card        :%s\n",cap.card);
 	printf("bus_info    :%s\n",cap.bus_info);
 	printf("16-jinzhi capabilities:%x\n",cap.capabilities);
 	printf("10-jinzhi capabilities:%d\n\n",cap.capabilities);
+<<<<<<< HEAD
 #endif
+=======
+
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	CLEAR (fmt);
 
 	fmt.type                = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -331,7 +444,10 @@ static void init_device(void)
 	printf("pixel'yuyv'    			:%d\n",('Y'|'U'<<8|'Y'<<16|'V'<<24));
 	printf("pixel'mjpg'    		 :%d\n",('M'|'J'<<8|'P'<<16|'G'<<24));
 	printf("pixel'jpeg'     		:%d\n",('J'|'P'<<8|'E'<<16|'G'<<24));
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	printf("pixelformat 		 	:%d\n",fmt.fmt.pix.pixelformat);
 	printf("v4l1_filed(FIELD_INTERCACED=4)  :%d\n",fmt.fmt.pix.field);
 	printf("bytesperline		        :%d\n",fmt.fmt.pix.bytesperline);
@@ -344,7 +460,11 @@ static void init_device(void)
 
 }
 
+<<<<<<< HEAD
 void close_device(void)
+=======
+static void close_device(void)
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 {
 	if (-1 == close (fd))
 		errno_exit ("close");
@@ -352,6 +472,7 @@ void close_device(void)
 	fd = -1;
 }
 
+<<<<<<< HEAD
 void open_device(void)
 {
 	fd = open (dev_name, O_RDWR);
@@ -359,12 +480,22 @@ void open_device(void)
 	if (-1 == fd) {
 		printf ( "Cannot open '%s': %d\n",
 				dev_name, errno);
+=======
+static void open_device(void)
+{
+	fd = open (dev_name, O_RDWR /* required */ | O_NONBLOCK, 0);
+
+	if (-1 == fd) {
+		fprintf (stderr, "Cannot open '%s': %d, %s\n",
+				dev_name, errno, strerror (errno));
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 		exit (EXIT_FAILURE);
 	}
 }
 
 int main(int argc,char **argv)
 {
+<<<<<<< HEAD
 //for(;;){
 	//file_fd=fopen("mmap.jpg","w");    
 	dev_name = "/dev/video0";
@@ -376,16 +507,35 @@ int main(int argc,char **argv)
 //	printf("I'm 2~\n");
 	start_capturing ();
 //	printf("I'm 3~\n");
+=======
+	file_fd=fopen("mmap.jpg","w");    
+	dev_name = "/dev/video0";
+
+	open_device ();
+	printf("I'm 1~\n");
+	init_device ();
+//	sleep(10);
+	printf("I'm 2~\n");
+	start_capturing ();
+	printf("I'm 3~\n");
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	mainloop ();
 
 	stop_capturing ();
 
+<<<<<<< HEAD
 
 	uninit_device ();
 
 	close_device ();
 //sleep(10);
 //}
+=======
+	uninit_device ();
+
+	close_device ();
+
+>>>>>>> ad10c78009517700cc08889c7239005a1336c1bf
 	exit (EXIT_SUCCESS);
 
 	return 0;
